@@ -1,0 +1,32 @@
+{
+  "hyllyt": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    }
+  ],
+  "tavarat": [
+      {
+        "id": 1,
+        "nimi": "pallo",
+        "hyllyid": "1"
+      },
+      {
+        "id": 2,
+        "nimi": "kiekko",
+        "hyllyid": "1"
+      },
+      {
+        "id": 3,
+        "nimi": "maila",
+        "hyllyid": "2"
+      },
+      {
+        "id": 4,
+        "nimi": "potkulauta",
+        "hyllyid": "2"
+      }
+    ]
+}
