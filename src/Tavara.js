@@ -13,8 +13,7 @@ function Tavara() {
 
     return (
         <div>
-  
-  
+
           <Tavaralista />
   
         </div>
