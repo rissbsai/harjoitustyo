@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Tavaralistamuokkaus from './Tavaralistamuokkaus';
-function Tavaralista(props) {
+
+
+function Tavaralistamuokkaus(props) {
 
   const [tavaraLista, setTavaraLista] = useState([]);
   const [name, setName] = useState("");
   const [shelfNo, setShelfNo] = useState("");
   const [Loaded, setLoaded] = useState(false);
+
 
   //tällä errorilla voi HALUTESSAAN testata fetchiä,
   //esim laittamalla hakuun väärän polun (esim. tavarat --> tyypit)
@@ -35,6 +37,8 @@ function Tavaralista(props) {
     setLoaded(false);
     fetchData();
   }
+
+
 
   return (
     <div>
@@ -86,6 +90,9 @@ function Tavaralista(props) {
                     <td>{tavara.nimi}</td>
                     <td>{tavara.hyllyid}</td>
                     <td>{tavara.lkm}</td>
+                    <td><button id='lisaa'>+</button></td>
+                    <td><button id='vahenna'>-</button></td>
+                    <td><button id='poista'>Poista</button></td>
                   </tr>
                 ))
               : (
@@ -99,11 +106,13 @@ function Tavaralista(props) {
           </table>
           <br></br>
           <div>
-          
+     
+
+
          
           </div>
     </div>
   );
 }
 
-export default Tavaralista;
+export default Tavaralistamuokkaus;
