@@ -108,4 +108,3 @@ function Tavaralista(props) {
 }
 
 export default Tavaralista;
-
