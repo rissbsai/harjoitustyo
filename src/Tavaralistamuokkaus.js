@@ -107,9 +107,8 @@ function Tavaralistamuokkaus(props) {
                 <td>{tavara.nimi}</td>
                 <td>{tavara.hyllyid}</td>
                 <td>{tavara.lkm}</td>
-                <td><button onClick={lisaaSaldoa} id='lisaa'>+</button></td>
-                <td><button onClick={vahennaSaldoa} id='vahenna'>-</button></td>
-                <td><button onClick={poistaTavara} id='poista'>Poista</button></td>
+               
+                
 
               </tr>
             ))

@@ -10,7 +10,7 @@ function App() {
       <div className="App">  
       <nav>    
         <NavLink to='/tavarat'>Kaikki tavarat</NavLink><br></br>
-        <NavLink to='/muokkaa'>Muokkaa tavaroita</NavLink>   
+        <NavLink to='/muokkaa'>Poista tavaroita</NavLink>   
         </nav> 
       <Outlet />
     </div>    

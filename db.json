@@ -8,35 +8,23 @@
     }
   ],
   "tavarat": [
-      {
-        "id": 1,
-        "nimi": "pallo",
-        "hyllyid": "1",
-        "lkm":"15"
-      },
-      {
-        "id": 2,
-        "nimi": "kiekko",
-        "hyllyid": "1",
-        "lkm":"10"
-      },
-      {
-        "id": 3,
-        "nimi": "maila",
-        "hyllyid": "2",
-        "lkm":"4"
-      },
-      {
-        "id": 4,
-        "nimi": "potkulauta",
-        "hyllyid": "2",
-        "lkm":"7"
-      },
-      {
-        "id": 5,
-        "nimi": "sukset",
-        "hyllyid": "2",
-        "lkm":"12"
-      }
-    ]
+    {
+      "id": 3,
+      "nimi": "maila",
+      "hyllyid": "2",
+      "lkm": "4"
+    },
+    {
+      "id": 4,
+      "nimi": "potkulauta",
+      "hyllyid": "2",
+      "lkm": "7"
+    },
+    {
+      "id": 5,
+      "nimi": "sukset",
+      "hyllyid": "2",
+      "lkm": "12"
+    }
+  ]
 }

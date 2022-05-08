@@ -2,8 +2,141 @@ import { Component } from "react";
 import React from "react";
 import{useEffect, useState} from "react";
 
+class Tavaralista extends Component{
 
-class Tavaralista extends Component {
+  constructor(props){
+      super(props);
+      this.state = {nimi:'', hyllyid:'', lkm:''};
+
+      this.buttonClicked = this.buttonClicked.bind(this);
+      this.handleNameChange = this.handleNameChange.bind(this);
+      this.handleShelfChange = this.handleShelfChange.bind(this);
+      this.delete = this.delete.bind(this);
+      
+  }
+
+  componentDidMount(){
+      this.fetchData();
+  }
+
+  async fetchData(){
+      let url = "http://localhost:4000/tavarat/";
+      let params = "";
+      if(this.state.nimi && this.state.hyllyid){
+          params = "?nimi_like="+this.state.nimi+"&hyllyid_like="+this.state.hyllyid;
+      }else if(this.state.nimi){
+          params = "?nimi_like="+this.state.nimi;
+      }else if(this.state.id){
+          params = "?hyllyid_like="+this.state.hyllyid;
+      }
+      let response = await fetch(url+params);
+      let data = await response.json();
+      console.log(data);
+      this.setState({fetchedData : data});
+  }
+
+  buttonClicked(){  
+      this.setState({fetchedData : null});     
+      this.fetchData();
+  }
+
+  handleNameChange(event){
+      this.setState({nimi: event.target.value})
+  }
+
+  handleShelfChange(event){
+      this.setState({hyllyid: event.target.value})
+  }
+
+  async delete(event){
+      await fetch("http://localhost:4000/tavarat/"+ event.target.id ,{method:"DELETE"});
+      this.fetchData();
+  }
+
+/*   async lisaa(event){
+    await fetch("http://localhost:4000/tavarat/"+ event.target.id ,{method:"PUT"});
+    this.lkm = this.lkm +1;
+    this.fetchData();
+}
+
+async poista(event){
+  await fetch("http://localhost:4000/tavarat/"+ event.target.id ,{method:"PUT"});
+  this.lkm = this.lkm -1;
+  this.fetchData();
+}
+ */
+
+  
+  render(props){
+      var content;
+      var rivit;
+      if(this.state.fetchedData){
+          if(this.state.fetchedData.length > 0){
+          rivit = this.state.fetchedData.map((row) =>
+              <tr key={row.id}>
+                  <td>{row.id}</td>
+                  <td>{row.nimi}</td>
+                  <td>{row.hyllyid}</td>
+                  <td>{row.lkm}</td>
+
+                  <td><button onClick={this.lisaa} id={row.id}>+</button></td>
+                <td><button onClick={this.vahenna} id={row.id}>-</button></td>
+             
+                  <td><button onClick={this.delete} id={row.id}>Poista</button></td>
+
+                  
+              </tr>)
+
+          content = <div>
+                      <table>
+                          <thead>
+                              <tr>
+                                  <th>Id</th>
+                                  <th>Nimi</th>
+                                  <th>Hyllynumero</th>
+                                  <th>Lkm</th>
+                                  
+                                  <th></th>
+                                  <th></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {rivit}
+                          </tbody>
+                      </table>    
+                  </div>}
+          else{
+              content = "Annetuilla hakuehdoilla ei löytynyt dataa"
+          }
+          
+      }else{
+          content = "Loading..."
+      }
+      
+
+      return(
+          <div style={{marginBottom: 2 + 'em'}}>
+              <div style={{marginBottom: 2 + 'em'}}>
+                  <form style={{marginBottom: 1 + 'em'}}>
+                  <label>Nimi: </label>
+                  <input type="text" name="name" id="name" onChange={this.handleNameChange}></input>
+                  <label>Hyllynumero: </label>
+                  <input type="text" name="shelf" id="shelf" onChange={this.handleShelfChange}></input>
+                  </form>
+                  <button onClick={this.buttonClicked}>Hae</button>
+              </div>
+                  {content}
+              
+              
+          </div>
+      )
+  }
+
+}
+
+
+
+/* class Tavaralista extends Component {
 
   constructor(props) {
     super();
@@ -124,6 +257,6 @@ class Tavaralista extends Component {
       );
     }
   }
-}
+} */
 
 export default Tavaralista;
