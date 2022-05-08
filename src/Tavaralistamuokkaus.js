@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-
 function Tavaralistamuokkaus(props) {
 
   const [tavaraLista, setTavaraLista] = useState([]);
   const [name, setName] = useState("");
   const [shelfNo, setShelfNo] = useState("");
   const [Loaded, setLoaded] = useState(false);
-
 
   //tällä errorilla voi HALUTESSAAN testata fetchiä,
   //esim laittamalla hakuun väärän polun (esim. tavarat --> tyypit)
@@ -38,7 +36,26 @@ function Tavaralistamuokkaus(props) {
     fetchData();
   }
 
+  const lisaaSaldoa=(e)=> {
+    console.log("lisaa saldoa");
+  }
 
+  const vahennaSaldoa=(e)=> {
+    console.log("vahemman saldoa");
+  }
+
+ const poistaTavara=(e)=> {
+    let response = fetch("http://localhost:4000/tavarat/" + e.target.id, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+      .then((response) => {
+        console.log(response);
+        this.fetchData();
+      })
+  }
 
   return (
     <div>
@@ -63,54 +80,53 @@ function Tavaralistamuokkaus(props) {
       <button onClick={searchDb}>Etsi tavara</button>
       <br></br>
       <br></br>
-      <table class="center">
-      <tbody>         
+      <table className="center">
+        <tbody>
+          <tr>
+            <th>Tavaran id</th>
+            <th>Nimi</th>
+            <th>Hyllynumero</th>
+            <th>Lukumäärä</th>
+          </tr>
+          {error ? (
             <tr>
-              <th>Tavaran id</th>
-              <th>Nimi</th>
-              <th>Hyllynumero</th>
-              <th>Lukumäärä</th>
+              <td colSpan="10">{error}</td>
             </tr>
-            {error ? (
-              <tr>
-                <td colSpan="10">{error}</td>
+          ) : !Loaded ? (
+            <tr>
+              <td width="100%" colSpan="10">
+                Haetaan varastosaldoa...
+              </td>
+            </tr>
+          ) : tavaraLista.length > 0 ? (
+            tavaraLista.map((tavara) =>
+              <tr
+                key={tavara.id}
+              >
+                <td>{tavara.id}</td>
+                <td>{tavara.nimi}</td>
+                <td>{tavara.hyllyid}</td>
+                <td>{tavara.lkm}</td>
+                <td><button onClick={lisaaSaldoa} id='lisaa'>+</button></td>
+                <td><button onClick={vahennaSaldoa} id='vahenna'>-</button></td>
+                <td><button onClick={poistaTavara} id='poista'>Poista</button></td>
+
               </tr>
-            ) : !Loaded ? (
+            ))
+            : (
               <tr>
                 <td width="100%" colSpan="10">
-                  Haetaan varastosaldoa...
+                  Annetuilla hakuehdoilla ei löytynyt tavaroita.
                 </td>
               </tr>
-            ) : tavaraLista.length > 0 ? (
-                tavaraLista.map((tavara) => 
-                    <tr
-                    key={tavara.id}
-                    >
-                    <td>{tavara.id}</td>
-                    <td>{tavara.nimi}</td>
-                    <td>{tavara.hyllyid}</td>
-                    <td>{tavara.lkm}</td>
-                    <td><button id='lisaa'>+</button></td>
-                    <td><button id='vahenna'>-</button></td>
-                    <td><button id='poista'>Poista</button></td>
-                  </tr>
-                ))
-              : (
-                <tr>
-                  <td width="100%" colSpan="10">
-                    Annetuilla hakuehdoilla ei löytynyt tavaroita.
-                  </td>
-                </tr>
-                )}
-          </tbody>
-          </table>
-          <br></br>
-          <div>
-     
+            )}
+        </tbody>
+      </table>
+      <br></br>
+      <div>
 
 
-         
-          </div>
+      </div>
     </div>
   );
 }

@@ -1,109 +1,129 @@
-import React, { useState, useEffect } from 'react';
-import Tavaralistamuokkaus from './Tavaralistamuokkaus';
-function Tavaralista(props) {
+import { Component } from "react";
+import React from "react";
+import{useEffect, useState} from "react";
 
-  const [tavaraLista, setTavaraLista] = useState([]);
-  const [name, setName] = useState("");
-  const [shelfNo, setShelfNo] = useState("");
-  const [Loaded, setLoaded] = useState(false);
 
-  //tällä errorilla voi HALUTESSAAN testata fetchiä,
-  //esim laittamalla hakuun väärän polun (esim. tavarat --> tyypit)
-  const [error, setError] = useState(null);
+class Tavaralista extends Component {
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch("http://localhost:4000/tavarat?nimi_like=" + name + "&hyllyid_like=" + shelfNo);
-      const json = await response.json();
-      console.log(json, response);
-      //jos vastaus ok, asetetaan haettu data
-      //muutoin tulostetaan "virhe"
-      if (response.ok) {
-        setTavaraLista(json);
-      } else {
-        setError("Tapahtui virhe");
-      }
-      setLoaded(true);
-    } catch (error) {
-      setLoaded(true);
-      setError(error);
-      console.log("virhe", error);
+  constructor(props) {
+    super();
+
+    this.demoAsyncCall = this.demoAsyncCall.bind(this);
+    this.muutaHylly=this.muutaHylly.bind(this);
+    this.muutaNimi=this.muutaNimi.bind(this);
+    this.componentDidMount=this.componentDidMount(this);
+    this.searchDb=this.searchDb(this);
+
+    this.state = {
+      data: null,
+      id: "",
+      nimi: "",
+      hyllyid: true,
+      lkm: "",
+      loading: true,
+      wrongInfo: false
     }
   }
 
-  const searchDb = (e) => {
-    setLoaded(false);
-    fetchData();
+  async fetchData() {
+    console.log("fetching data...");
+    var nimi = this.state.nimi;
+    var hyllyid = this.state.hyllyid;
+    let response = await fetch("http://localhost:4000/tavarat?nimi_like=" + nimi + "&hyllyid_like=" + hyllyid);
+    let data = await response.json();
+    this.setState({ data: data });
+    if (data === 0) {
+      this.setState({ wrongInfo: true });
+    } else {
+      this.setState({ wrongInfo: false });
+    }
   }
 
-  return (
-    <div>
-      <h1>Varaston hallintajärjestelmä</h1>
-      <br></br>
-      <input
-        name="nimi"
-        type="text"
-        placeholder="Etsi tavaraa nimellä"
-        onChange={e => setName(e.target.value)}
-      >
-      </input>
-      <br></br>
-      <input
-        name="hyllyid"
-        type="text"
-        placeholder="Etsi tavaraa hyllynumerolla"
-        onChange={e => setShelfNo(e.target.value)}
-      >
-      </input>
-      <br></br>
-      <button onClick={searchDb}>Etsi tavara</button>
-      <br></br>
-      <br></br>
-      <table class="center">
-      <tbody>         
-            <tr>
-              <th>Tavaran id</th>
-              <th>Nimi</th>
-              <th>Hyllynumero</th>
-              <th>Lukumäärä</th>
-            </tr>
-            {error ? (
-              <tr>
-                <td colSpan="10">{error}</td>
-              </tr>
-            ) : !Loaded ? (
-              <tr>
-                <td width="100%" colSpan="10">
-                  Haetaan varastosaldoa...
-                </td>
-              </tr>
-            ) : tavaraLista.length > 0 ? (
-                tavaraLista.map((tavara) => 
-                    <tr
-                    key={tavara.id}
-                    >
-                    <td>{tavara.id}</td>
-                    <td>{tavara.nimi}</td>
-                    <td>{tavara.hyllyid}</td>
-                    <td>{tavara.lkm}</td>
-                  </tr>
-                ))
-              : (
-                <tr>
-                  <td width="100%" colSpan="10">
-                    Annetuilla hakuehdoilla ei löytynyt tavaroita.
-                  </td>
-                </tr>
-                )}
-          </tbody>
-          </table>
+  demoAsyncCall() {
+    return new Promise((resolve) => setTimeout(() => resolve(), 2000));
+}
+
+  componentDidMount() {
+    this.demoAsyncCall().then(() => this.setState({ loading: false }));
+    this.fetchData();
+  }
+
+  muutaNimi(event) {
+    this.setState({ nimi: event.target.value })
+  }
+
+  muutaHylly(event) {
+    this.setState({ osoite: event.target.value })
+  }
+
+  searchDb() {
+    this.fetchData();
+  }
+
+  render() {
+    console.log("Tavaralista");
+    const { loading } = this.state;
+    const { wrongInfo } = this.state;
+    var dataObjektit = this.state.data;
+    if (loading)
+      return (
+        <div>
+          <h2>Haetaan varastosaldoja...</h2>
+        </div>
+      )
+    else if (wrongInfo === true) {
+      return (
+        <div>
+          <h1>Varaston hallintajärjestelmä</h1>
           <br></br>
-          <div>
-          
-         
-          </div>
-    </div>
-  );
+          <input name="nimi" type="text" placeholder="Etsi tavaraa nimellä" onChange={this.muutaNimi}></input>
+          <br></br>
+          <input name="hyllyid" type="text" placeholder="Etsi tavaraa hyllynumerolla" onChange={this.muutaHylly}></input>
+          <br></br>
+          <button onClick={this.searchDb}>Etsi tavara</button>
+          <br></br>
+          <br></br>
+          <h2><b>Annetuilla hakuehdoilla ei löytynyt tavaroita...</b></h2>
+        </div>
+      )
+    }
+    else {
+      console.log("Tuletko tänne?");
+      dataObjektit = this.state.data.map((tavara) =>
+      (<tr key={tavara.id}>
+        <td>{tavara.id}</td>
+        <td>{tavara.nimi}</td>
+        <td>{tavara.hyllyid}</td>
+        <td>{tavara.lkm}</td>
+      </tr>
+      ))
+
+      return (
+        <div>
+          <h1>Varaston hallintajärjestelmä</h1>
+          <br></br>
+          <input name="nimi" type="text" placeholder="Etsi tavaraa nimellä" onChange={this.muutaNimi}></input>
+          <br></br>
+          <input name="hyllyid" type="text" placeholder="Etsi tavaraa hyllynumerolla" onChange={this.muutaHylly}></input>
+          <br></br>
+          <button onClick={this.searchDb}>Etsi tavara</button>
+          <table>
+            <thead>
+              <tr>
+                <th>Id:</th>
+                <th>Nimi:</th>
+                <th>Hyllyid:</th>
+                <th>Lukumäärä:</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dataObjektit}
+            </tbody>
+          </table >
+        </div>
+      );
+    }
+  }
 }
 
 export default Tavaralista;
