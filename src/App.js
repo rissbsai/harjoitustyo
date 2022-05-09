@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
-import Tavaralista from './Tavaralistamuokkaus';
+import Tavaralista from './Tavaralista';
 
 
 
@@ -10,7 +10,7 @@ function App() {
       <div className="App">  
       <nav>    
         <NavLink to='/tavarat'>Kaikki tavarat</NavLink><br></br>
-        <NavLink to='/muokkaa'>Poista tavaroita</NavLink>   
+        <NavLink to='/muokkaa'>Muokkaa varastoa</NavLink>   
         </nav> 
       <Outlet />
     </div>    
