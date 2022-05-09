@@ -26,7 +26,7 @@ class Tavaralistamuokkaus extends Component {
       params = "?nimi_like=" + this.state.nimi + "&hyllyid_like=" + this.state.hyllyid;
     } else if (this.state.nimi) {
       params = "?nimi_like=" + this.state.nimi;
-    } else if (this.state.id) {
+    } else if (this.state.hyllyid) {
       params = "?hyllyid_like=" + this.state.hyllyid;
     }
     let response = await fetch(url + params);

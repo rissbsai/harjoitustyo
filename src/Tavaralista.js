@@ -36,7 +36,7 @@ function Tavaralista(props) {
     fetchData();
   }
 
-  const lisaaSaldoa=(e)=> {
+  /*const lisaaSaldoa=(e)=> {
     console.log("lisaa saldoa");
   }
 
@@ -55,7 +55,7 @@ function Tavaralista(props) {
         console.log(response);
         this.fetchData();
       })
-  }
+  }*/
 
   return (
     <div>

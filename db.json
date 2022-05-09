@@ -25,6 +25,18 @@
       "nimi": "sukset",
       "hyllyid": "2",
       "lkm": "12"
+    },
+    {
+      "id": 6,
+      "nimi": "reppu",
+      "hyllyid": "1",
+      "lkm": "3"
+    },
+    {
+      "id": 7,
+      "nimi": "puukko",
+      "hyllyid": "1",
+      "lkm": "98"
     }
   ]
 }
