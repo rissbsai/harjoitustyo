@@ -1,6 +1,7 @@
 import { Component } from "react";
 import React from "react";
 import { useEffect, useState } from "react";
+import Create from "./Create";
 
 class Tavaralistamuokkaus extends Component {
 
@@ -126,7 +127,9 @@ class Tavaralistamuokkaus extends Component {
             <input type="text" name="shelf" id="shelf" placeholder="Etsi tavaraa hyllynumerolla" onChange={this.handleShelfChange}></input>
           </form>
           <button onClick={this.buttonClicked}>Etsi tavara</button>
-          <button onClick={this.buttonLisaaClicked} >Lisää tavara</button>
+          
+          <Create />
+
         </div>
         {content}
 
