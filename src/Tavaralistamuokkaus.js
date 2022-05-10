@@ -9,6 +9,7 @@ class Tavaralistamuokkaus extends Component {
     this.state = { nimi: '', hyllyid: '', lkm: '' };
 
     this.buttonClicked = this.buttonClicked.bind(this);
+    this.buttonLisaaClicked = this.buttonLisaaClicked.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleShelfChange = this.handleShelfChange.bind(this);
     this.delete = this.delete.bind(this);
@@ -36,6 +37,11 @@ class Tavaralistamuokkaus extends Component {
   }
 
   buttonClicked() {
+    this.setState({ fetchedData: null });
+    this.fetchData();
+  }
+
+  buttonLisaaClicked() {
     this.setState({ fetchedData: null });
     this.fetchData();
   }
@@ -120,6 +126,7 @@ class Tavaralistamuokkaus extends Component {
             <input type="text" name="shelf" id="shelf" placeholder="Etsi tavaraa hyllynumerolla" onChange={this.handleShelfChange}></input>
           </form>
           <button onClick={this.buttonClicked}>Etsi tavara</button>
+          <button onClick={this.buttonLisaaClicked} >Lisää tavara</button>
         </div>
         {content}
 
