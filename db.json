@@ -15,25 +15,28 @@
       "id": 4
     },
     {
-      "nimi": "potkulauta",
-      "hyllyid": "2",
-      "lkm": "7",
-      "id": 5
-    },
-    {
-      "id": 6
-    },
-    {
-      "nimi": "teltta",
-      "hyllyid": "",
-      "lkm": "6",
-      "id": 7
-    },
-    {
       "nimi": "puukko",
       "hyllyid": "1",
       "lkm": "9",
       "id": 8
+    },
+    {
+      "nimi": "pallo",
+      "hyllyid": "2",
+      "lkm": "55",
+      "id": 9
+    },
+    {
+      "nimi": "teltta",
+      "hyllyid": "2",
+      "lkm": "5",
+      "id": 13
+    },
+    {
+      "nimi": "maila",
+      "hyllyid": "1",
+      "lkm": "7",
+      "id": 14
     }
   ]
 }
