@@ -1,17 +1,17 @@
 import { useState } from "react";
 
-const Create = () => {
+ const Create = () =>  {
     const [nimi, setNimi] = useState('');
     const [lkm, setLkm] = useState('');
     const [hyllyid, setHyllyid] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e) => { 
         e.preventDefault();
-        const tavara = {nimi, lkm, hyllyid};
+        const tavara = {nimi, hyllyid, lkm};
 
-        fetch ('http://localhost:4000/tavarat', {
+         fetch ('http://localhost:4000/tavarat', {
             method: 'POST',
-            headers: {"Content-type": "application-json"},
+            headers: new Headers({'content-type': 'application/json'}),
             body: JSON.stringify(tavara)
     
         }).then(() =>{
@@ -29,8 +29,8 @@ const Create = () => {
                 <input type="text" required value={lkm} onChange={(e) =>setLkm(e.target.value)}></input><br></br>
                 <label>Hyllynumero</label><br></br>
                 <select value={hyllyid} onChange={(e) =>setHyllyid(e.target.value)}>
-                    <option value="yksi">1</option>
-                    <option value="kaksi">2</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
                 </select><br></br>
                 <button>Lisää tavara</button>
             </form>

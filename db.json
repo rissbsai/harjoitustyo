@@ -9,37 +9,31 @@
   ],
   "tavarat": [
     {
-      "id": 4,
       "nimi": "potkulauta",
       "hyllyid": "2",
-      "lkm": "7"
+      "lkm": "7",
+      "id": 4
     },
     {
-      "id": 5,
-      "nimi": "sukset",
+      "nimi": "potkulauta",
       "hyllyid": "2",
-      "lkm": "12"
+      "lkm": "7",
+      "id": 5
     },
     {
-      "id": 6,
-      "nimi": "reppu",
-      "hyllyid": "1",
-      "lkm": "3"
+      "id": 6
     },
     {
-      "id": 7,
+      "nimi": "teltta",
+      "hyllyid": "",
+      "lkm": "6",
+      "id": 7
+    },
+    {
       "nimi": "puukko",
       "hyllyid": "1",
-      "lkm": "98"
-    },
-    {
+      "lkm": "9",
       "id": 8
-    },
-    {
-      "id": 9
-    },
-    {
-      "id": 10
     }
   ]
 }
