@@ -14,6 +14,7 @@ class Tavaralistamuokkaus extends Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleShelfChange = this.handleShelfChange.bind(this);
     this.delete = this.delete.bind(this);
+    this.handleChangeinStock = this.handleChangeinStock.bind(this);
 
   }
 
@@ -60,19 +61,20 @@ class Tavaralistamuokkaus extends Component {
     this.fetchData();
   }
 
-  /*   async lisaa(event){
-      await fetch("http://localhost:4000/tavarat/"+ event.target.id ,{method:"PUT"});
-      this.lkm = this.lkm +1;
-      this.fetchData();
-  }
-  
-  async poista(event){
-    await fetch("http://localhost:4000/tavarat/"+ event.target.id ,{method:"PUT"});
-    this.lkm = this.lkm -1;
+  handleChangeinStock(event) {
+    var id = event.target.id;
+    this.setState({ id: event.target.id });
+    this.setState({ lkm: event.target.value });
+    
+    fetch('http://localhost:4000/tavarat/'+id, {
+      method: 'POST',
+      headers: new Headers({ 'content-type': 'application/json' })
+
+    }).then(() => {
+      console.log('Varastosaldoa muutettu...');
+    })
     this.fetchData();
   }
-   */
-
 
   render(props) {
     var content;
@@ -85,8 +87,8 @@ class Tavaralistamuokkaus extends Component {
             <td>{row.nimi}</td>
             <td>{row.hyllyid}</td>
             <td>{row.lkm}</td>
-            <td><button onClick={this.lisaa} id={row.id}>+</button></td>
-            <td><button onClick={this.vahenna} id={row.id}>-</button></td>
+            <td><button onClick={this.handleChangeinStock} id={row.id} value={row.lkm + 1}>+</button></td>
+            <td><button onClick={this.handleChangeinStock} id={row.id} value={row.lkm - 1}>-</button></td>
             <td><button onClick={this.delete} id={row.id}>Poista</button></td>
           </tr>)
 
@@ -121,13 +123,13 @@ class Tavaralistamuokkaus extends Component {
       <div style={{ marginBottom: 2 + 'em' }}>
         <div style={{ marginBottom: 2 + 'em' }}>
           <form style={{ marginBottom: 1 + 'em' }}>
-          <br></br>
+            <br></br>
             <input type="text" name="name" id="name" placeholder="Etsi tavaraa nimellä" onChange={this.handleNameChange}></input>
             <br></br>
             <input type="text" name="shelf" id="shelf" placeholder="Etsi tavaraa hyllynumerolla" onChange={this.handleShelfChange}></input>
           </form>
           <button onClick={this.buttonClicked}>Etsi tavara</button>
-          
+
           <Create />
 
         </div>
