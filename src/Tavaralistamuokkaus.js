@@ -67,7 +67,7 @@ class Tavaralistamuokkaus extends Component {
     this.setState({ lkm: event.target.value });
     
     fetch('http://localhost:4000/tavarat/'+id, {
-      method: 'POST',
+      method: 'PUT',
       headers: new Headers({ 'content-type': 'application/json' })
 
     }).then(() => {

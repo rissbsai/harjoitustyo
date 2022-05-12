@@ -9,9 +9,6 @@
   ],
   "tavarat": [
     {
-      "nimi": "potkulauta",
-      "hyllyid": "2",
-      "lkm": "7",
       "id": 4
     },
     {
@@ -43,6 +40,12 @@
       "hyllyid": "2",
       "lkm": "33",
       "id": 15
+    },
+    {
+      "nimi": "lenkkarit",
+      "hyllyid": "2",
+      "lkm": "21",
+      "id": 16
     }
   ]
 }
