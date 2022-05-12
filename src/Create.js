@@ -5,6 +5,11 @@ import { useState } from "react";
     const [lkm, setLkm] = useState('');
     const [hyllyid, setHyllyid] = useState('');
 
+    //VILLE: Tavaraa lisätessä, täytyy lukumäärä-alasvetovalikosta klikata ensin valinta --> 2
+    //ja sitten taas --> 1, jotta tavaran saa tallennettu/hyllynumeron valinta aktivoituu.
+    //Lisäksi, lisättyäsi tavaran, täytyy sivu päivittää tai "Etsiä tavarat" uudelleen
+    //jotta saat lisäämäsi tavaran taulukkoon. Meillä loppui aika kesken, ei ehdittu koodata tänne
+    //taulukon uudelleen lataamista lisäyksen jälkeen.
     const handleSubmit = (e) => { 
         e.preventDefault();
         const tavara = {nimi, hyllyid, lkm};

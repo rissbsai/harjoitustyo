@@ -14,7 +14,9 @@ class Tavaralistamuokkaus extends Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleShelfChange = this.handleShelfChange.bind(this);
     this.delete = this.delete.bind(this);
-    this.handleChangeinStock = this.handleChangeinStock.bind(this);
+    //this.handleChangeinStock = this.handleChangeinStock.bind(this);
+    //VILLE: yläpuolella olevaa handleChangeinStockia yritettiin koodata
+    //siinä onnistumatta, tarkempaa tietoa alempana
 
   }
 
@@ -61,20 +63,29 @@ class Tavaralistamuokkaus extends Component {
     this.fetchData();
   }
 
-  handleChangeinStock(event) {
+  /*VILLE: Tässä on yritetty taulukossa näkyvillä + ja -  napeilla
+    muuttaa tavaran lukumäärää PUT -metodilla. Yritimme "päivittää" koko tavaran kaikkine tietoineen,
+    ilman että se poistuu hyllyltä, mutta aika loppui kesken, emme saaneet tätä muokkausta toimimaan.
+    handleChangeinStock(event) {
     var id = event.target.id;
+    var lkm = event.target.value;
+    var nimi = event.target.nimi;
+    var hyllyid = event.target.hyllyid;
     this.setState({ id: event.target.id });
     this.setState({ lkm: event.target.value });
+    this.setState({ nimi: event.target.nimi });
+    this.setState({ hyllyid: event.target.hyllyid });
     
     fetch('http://localhost:4000/tavarat/'+id, {
       method: 'PUT',
-      headers: new Headers({ 'content-type': 'application/json' })
+      headers: new Headers({ 'content-type': 'application/json' }),
+      body: JSON.stringify({id, lkm, nimi, hyllyid})
 
     }).then(() => {
       console.log('Varastosaldoa muutettu...');
     })
     this.fetchData();
-  }
+  }*/
 
   render(props) {
     var content;
@@ -87,7 +98,7 @@ class Tavaralistamuokkaus extends Component {
             <td>{row.nimi}</td>
             <td>{row.hyllyid}</td>
             <td>{row.lkm}</td>
-            <td><button onClick={this.handleChangeinStock} id={row.id} value={row.lkm + 1}>+</button></td>
+            <td><button onClick={this.handleChangeinStock} id={row.id} nimi={row.nimi} hyllyid={row.hyllyid} value={row.lkm + 1}>+</button></td>
             <td><button onClick={this.handleChangeinStock} id={row.id} value={row.lkm - 1}>-</button></td>
             <td><button onClick={this.delete} id={row.id}>Poista</button></td>
           </tr>)
@@ -111,7 +122,7 @@ class Tavaralistamuokkaus extends Component {
         </div>
       }
       else {
-        content = "Annetuilla hakuehdoilla ei löytynyt dataa"
+        content = "Annetuilla hakuehdoilla ei löytynyt tavaroita"
       }
 
     } else {
@@ -141,130 +152,5 @@ class Tavaralistamuokkaus extends Component {
   }
 
 }
-
-
-
-/* class Tavaralista extends Component {
-
-  constructor(props) {
-    super();
-
-    this.demoAsyncCall = this.demoAsyncCall.bind(this);
-    this.muutaHylly=this.muutaHylly.bind(this);
-    this.muutaNimi=this.muutaNimi.bind(this);
-    this.componentDidMount=this.componentDidMount(this);
-    this.searchDb=this.searchDb(this);
-
-    this.state = {
-      data: null,
-      id: "",
-      nimi: "",
-      hyllyid: true,
-      lkm: "",
-      loading: true,
-      wrongInfo: false
-    }
-  }
-
-  async fetchData() {
-    console.log("fetching data...");
-    var nimi = this.state.nimi;
-    var hyllyid = this.state.hyllyid;
-    let response = await fetch("http://localhost:4000/tavarat?nimi_like=" + nimi + "&hyllyid_like=" + hyllyid);
-    let data = await response.json();
-    this.setState({ data: data });
-    if (data === 0) {
-      this.setState({ wrongInfo: true });
-    } else {
-      this.setState({ wrongInfo: false });
-    }
-  }
-
-  demoAsyncCall() {
-    return new Promise((resolve) => setTimeout(() => resolve(), 2000));
-}
-
-  componentDidMount() {
-    this.demoAsyncCall().then(() => this.setState({ loading: false }));
-    this.fetchData();
-  }
-
-  muutaNimi(event) {
-    this.setState({ nimi: event.target.value })
-  }
-
-  muutaHylly(event) {
-    this.setState({ osoite: event.target.value })
-  }
-
-  searchDb() {
-    this.fetchData();
-  }
-
-  render() {
-    console.log("Tavaralista");
-    const { loading } = this.state;
-    const { wrongInfo } = this.state;
-    var dataObjektit = this.state.data;
-    if (loading)
-      return (
-        <div>
-          <h2>Haetaan varastosaldoja...</h2>
-        </div>
-      )
-    else if (wrongInfo === true) {
-      return (
-        <div>
-          <h1>Varaston hallintajärjestelmä</h1>
-          <br></br>
-          <input name="nimi" type="text" placeholder="Etsi tavaraa nimellä" onChange={this.muutaNimi}></input>
-          <br></br>
-          <input name="hyllyid" type="text" placeholder="Etsi tavaraa hyllynumerolla" onChange={this.muutaHylly}></input>
-          <br></br>
-          <button onClick={this.searchDb}>Etsi tavara</button>
-          <br></br>
-          <br></br>
-          <h2><b>Annetuilla hakuehdoilla ei löytynyt tavaroita...</b></h2>
-        </div>
-      )
-    }
-    else {
-      console.log("Tuletko tänne?");
-      dataObjektit = this.state.data.map((tavara) =>
-      (<tr key={tavara.id}>
-        <td>{tavara.id}</td>
-        <td>{tavara.nimi}</td>
-        <td>{tavara.hyllyid}</td>
-        <td>{tavara.lkm}</td>
-      </tr>
-      ))
-
-      return (
-        <div>
-          <h1>Varaston hallintajärjestelmä</h1>
-          <br></br>
-          <input name="nimi" type="text" placeholder="Etsi tavaraa nimellä" onChange={this.muutaNimi}></input>
-          <br></br>
-          <input name="hyllyid" type="text" placeholder="Etsi tavaraa hyllynumerolla" onChange={this.muutaHylly}></input>
-          <br></br>
-          <button onClick={this.searchDb}>Etsi tavara</button>
-          <table>
-            <thead>
-              <tr>
-                <th>Id:</th>
-                <th>Nimi:</th>
-                <th>Hyllyid:</th>
-                <th>Lukumäärä:</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dataObjektit}
-            </tbody>
-          </table >
-        </div>
-      );
-    }
-  }
-} */
 
 export default Tavaralistamuokkaus;

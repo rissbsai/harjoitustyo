@@ -36,27 +36,6 @@ function Tavaralista(props) {
     fetchData();
   }
 
-  /*const lisaaSaldoa=(e)=> {
-    console.log("lisaa saldoa");
-  }
-
-  const vahennaSaldoa=(e)=> {
-    console.log("vahemman saldoa");
-  }
-
- const poistaTavara=(e)=> {
-    let response = fetch("http://localhost:4000/tavarat/" + e.target.id, {
-      method: 'DELETE',
-      headers: {
-        'Content-type': 'application/json'
-      }
-    })
-      .then((response) => {
-        console.log(response);
-        this.fetchData();
-      })
-  }*/
-
   return (
     <div>
       <br></br>

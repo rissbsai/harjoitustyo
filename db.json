@@ -9,43 +9,16 @@
   ],
   "tavarat": [
     {
-      "id": 4
-    },
-    {
-      "nimi": "puukko",
-      "hyllyid": "1",
-      "lkm": "9",
-      "id": 8
+      "nimi": "maila",
+      "hyllyid": "2",
+      "lkm": "2",
+      "id": 1
     },
     {
       "nimi": "pallo",
-      "hyllyid": "2",
-      "lkm": "55",
-      "id": 9
-    },
-    {
-      "nimi": "teltta",
-      "hyllyid": "2",
-      "lkm": "5",
-      "id": 13
-    },
-    {
-      "nimi": "maila",
       "hyllyid": "1",
-      "lkm": "7",
-      "id": 14
-    },
-    {
-      "nimi": "Hyppynaru",
-      "hyllyid": "2",
-      "lkm": "33",
-      "id": 15
-    },
-    {
-      "nimi": "lenkkarit",
-      "hyllyid": "2",
-      "lkm": "21",
-      "id": 16
+      "lkm": "3",
+      "id": 2
     }
   ]
 }
